@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#050b14" />
+    <title>Neon Drift Protocol | 夜行协议</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="hud">
+      <div id="brand">NEON DRIFT PROTOCOL <span>夜行协议</span></div>
+      <div id="status">
+        <span>MISSION / 任务目标</span>
+        <strong>摧毁街区方块，清除所有巡逻无人机</strong>
+      </div>
+      <div id="combatHud">
+        <div class="hud-card"><span>DRONES / 无人机</span><strong id="droneCount">3</strong></div>
+        <div class="hud-card"><span>BLOCKS / 方块</span><strong id="blockCount">0</strong></div>
+        <div id="healthCard"><span>INTEGRITY / 装甲</span><strong id="healthValue">100</strong><div id="healthTrack"><i id="healthFill"></i></div></div>
+      </div>
+      <div id="ammo">弹药 <span id="ammoValue">12</span><small>R 换弹</small></div>
+      <div id="crosshair"></div>
+      <div id="message">准备进入战区</div>
+      <div id="screenFlash"></div>
+    </div>
+
+    <div id="touchControls" aria-label="触屏操作">
+      <div id="joystick" aria-label="移动摇杆"><div id="joystickKnob"></div></div>
+      <div id="touchActions">
+        <button id="fireButton" class="touch-button fire-button" aria-label="按住射击">开火</button>
+        <button id="sprintButton" class="touch-button" aria-label="冲刺">冲刺</button>
+        <button id="reloadButton" class="touch-button" aria-label="换弹">换弹</button>
+        <button id="pauseButton" class="touch-button pause-button" aria-label="暂停">暂停</button>
+      </div>
+      <div id="lookHint">拖动屏幕转动视角</div>
+    </div>
+
+    <div id="startOverlay" class="visible">
+      <div class="panel">
+        <h1 id="overlayTitle">Neon Drift Protocol</h1>
+        <p id="overlayDescription">霓虹街区的无人机清剿行动。方块可被击碎，注意装甲状态。</p>
+        <ul>
+          <li>W / A / S / D：移动　·　Shift：冲刺</li>
+          <li>鼠标：瞄准　·　左键：射击</li>
+          <li>R：换弹　·　Esc：暂停</li>
+        </ul>
+        <button id="startButton">开始任务</button>
+        <div id="audioNote">建议佩戴耳机 · 音效在点击开始后启用</div>
+      </div>
+    </div>
+
+    <script type="module" src="game.js"></script>
+  </body>
+</html>
