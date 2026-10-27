@@ -22,18 +22,37 @@
       <div id="ammo">弹药 <span id="ammoValue">12</span><small>R 换弹</small></div>
       <div id="crosshair"></div>
       <div id="message">准备进入战区</div>
+      <button id="controlsToggle" type="button" aria-controls="controlsSidebar" aria-expanded="false">操作 <kbd>F1</kbd></button>
+      <aside id="controlsSidebar" aria-label="操作与屏幕控制设置" aria-hidden="true">
+        <div class="sidebar-heading">
+          <strong>操作设置</strong>
+          <button id="closeControls" type="button" aria-label="关闭操作设置">×</button>
+        </div>
+        <p>键盘与鼠标</p>
+        <ul class="control-list">
+          <li><kbd>W A S D</kbd><span>移动</span></li>
+          <li><kbd>鼠标</kbd><span>瞄准</span></li>
+          <li><kbd>左键</kbd><span>按住射击</span></li>
+          <li><kbd>Shift</kbd><span>冲刺</span></li>
+          <li><kbd>R</kbd><span>换弹</span></li>
+          <li><kbd>Esc</kbd><span>暂停 / 继续</span></li>
+        </ul>
+        <button id="screenControlsToggle" type="button" aria-pressed="false">屏幕控制：关闭 <kbd>T</kbd></button>
+        <p class="sidebar-note">手机：摇杆移动、拖动瞄准、按住开火。电脑默认使用鼠标与键盘。</p>
+        <small>F1 开关此侧栏 · T 开关屏幕控制</small>
+      </aside>
       <div id="screenFlash"></div>
     </div>
 
     <div id="touchControls" aria-label="触屏操作">
-      <div id="joystick" aria-label="移动摇杆"><div id="joystickKnob"></div></div>
+      <div id="joystick" aria-label="移动摇杆，W A S D"><div id="joystickKnob"></div><span>W A S D</span></div>
       <div id="touchActions">
-        <button id="fireButton" class="touch-button fire-button" aria-label="按住射击">开火</button>
-        <button id="sprintButton" class="touch-button" aria-label="冲刺">冲刺</button>
-        <button id="reloadButton" class="touch-button" aria-label="换弹">换弹</button>
-        <button id="pauseButton" class="touch-button pause-button" aria-label="暂停">暂停</button>
+        <button id="fireButton" class="touch-button fire-button" aria-label="按住开火，鼠标左键"><span>开火</span><small>左键</small></button>
+        <button id="sprintButton" class="touch-button" aria-label="冲刺，Shift">冲刺<small>Shift</small></button>
+        <button id="reloadButton" class="touch-button" aria-label="换弹，R">换弹<small>R</small></button>
+        <button id="pauseButton" class="touch-button pause-button" aria-label="暂停，Esc">暂停<small>Esc</small></button>
       </div>
-      <div id="lookHint">拖动屏幕转动视角</div>
+      <div id="lookHint">鼠标 / 拖动：瞄准</div>
     </div>
 
     <div id="startOverlay" class="visible">

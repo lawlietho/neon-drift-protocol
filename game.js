@@ -48,14 +48,20 @@ const healthValue = document.getElementById('healthValue');
 const healthFill = document.getElementById('healthFill');
 const overlayTitle = document.getElementById('overlayTitle');
 const overlayDescription = document.getElementById('overlayDescription');
+const touchControls = document.getElementById('touchControls');
 const joystick = document.getElementById('joystick');
 const joystickKnob = document.getElementById('joystickKnob');
 const fireButton = document.getElementById('fireButton');
 const sprintButton = document.getElementById('sprintButton');
 const reloadButton = document.getElementById('reloadButton');
 const pauseButton = document.getElementById('pauseButton');
+const controlsToggle = document.getElementById('controlsToggle');
+const controlsSidebar = document.getElementById('controlsSidebar');
+const closeControls = document.getElementById('closeControls');
+const screenControlsToggle = document.getElementById('screenControlsToggle');
 
 const joystickInput = new THREE.Vector2();
+let screenControlsEnabled = window.matchMedia('(pointer: coarse)').matches;
 let joystickPointerId = null;
 let lookPointerId = null;
 let lookLastX = 0;
@@ -250,6 +256,27 @@ function showOverlay(title, description, buttonText) {
   overlayDescription.textContent = description;
   startButton.textContent = buttonText;
   startOverlay.classList.add('visible');
+}
+
+function toggleControlsSidebar(forceOpen) {
+  const isOpen = typeof forceOpen === 'boolean'
+    ? forceOpen
+    : !controlsSidebar.classList.contains('open');
+  controlsSidebar.classList.toggle('open', isOpen);
+  controlsSidebar.setAttribute('aria-hidden', String(!isOpen));
+  controlsToggle.setAttribute('aria-expanded', String(isOpen));
+  if (isOpen && pointerLocked) document.exitPointerLock();
+}
+
+function setScreenControlsEnabled(enabled) {
+  screenControlsEnabled = enabled;
+  document.body.classList.toggle('screen-controls-enabled', enabled);
+  screenControlsToggle.setAttribute('aria-pressed', String(enabled));
+  screenControlsToggle.innerHTML = `屏幕控制：${enabled ? '开启' : '关闭'} <kbd>T</kbd>`;
+}
+
+function toggleScreenControls() {
+  setScreenControlsEnabled(!screenControlsEnabled);
 }
 
 function finishMission(won) {
@@ -633,7 +660,13 @@ function pauseGame() {
 function setupKeyboard() {
   document.addEventListener('keydown', (event) => {
     keys[event.code] = true;
+    if (event.code === 'F1') {
+      event.preventDefault();
+      toggleControlsSidebar();
+    }
+    if (event.code === 'KeyT' && !event.repeat) toggleScreenControls();
     if (event.code === 'KeyR' && !event.repeat) startReload();
+    if (event.code === 'Escape' && gamePhase === 'playing' && !pointerLocked) pauseGame();
   });
 
   document.addEventListener('keyup', (event) => {
@@ -645,6 +678,11 @@ function setupKeyboard() {
     fireHeld = false;
     releaseJoystick();
   });
+
+  controlsToggle.addEventListener('click', () => toggleControlsSidebar());
+  closeControls.addEventListener('click', () => toggleControlsSidebar(false));
+  screenControlsToggle.addEventListener('click', toggleScreenControls);
+  setScreenControlsEnabled(screenControlsEnabled);
 }
 
 function startGame() {
@@ -653,7 +691,7 @@ function startGame() {
     return;
   }
   initAudio();
-  if (window.matchMedia('(pointer: coarse)').matches || navigator.maxTouchPoints > 0) {
+  if (window.matchMedia('(pointer: coarse)').matches) {
     gamePhase = 'playing';
     startOverlay.classList.remove('visible');
     showMessage('战区已接入');
